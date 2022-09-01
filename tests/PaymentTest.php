@@ -5,8 +5,8 @@ namespace Tests\Unit;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\{Config, Http};
 use Illuminate\Support\{Arr, Str};
-use Malico\MeSomb\Exceptions\{InsufficientBalanceException, InvalidPhoneNumberException, InvalidPinException};
-use Malico\MeSomb\Payment;
+use Hachther\MeSomb\Exceptions\{InsufficientBalanceException, InvalidPhoneNumberException, InvalidPinException};
+use Hachther\MeSomb\Payment;
 use function Pest\Laravel\assertDatabaseHas;
 
 function fakePaymentResponse()
@@ -16,7 +16,7 @@ function fakePaymentResponse()
     Http::fake([
         'https://mesomb.hachther.com/api/*' => Http::response([
             'success'     => true,
-            'redirect'    => 'https://malico.me',
+            'redirect'    => 'https://hachther.com',
             'message'     => 'Payment Successful',
             'status'      => 'SUCCESS',
             'transaction' => [

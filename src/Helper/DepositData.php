@@ -1,6 +1,6 @@
 <?php
 
-namespace Malico\MeSomb\Helper;
+namespace Hachther\MeSomb\Helper;
 
 trait DepositData
 {
@@ -31,7 +31,7 @@ trait DepositData
      *
      * @param int|string $value
      *
-     * @return Malico\MeSomb\Payment
+     * @return Hachther\MeSomb\Payment
      */
     public function receiver($value)
     {
@@ -57,7 +57,7 @@ trait DepositData
      *
      * @param int|string $value
      *
-     * @return Malico\MeSomb\Payment
+     * @return Hachther\MeSomb\Payment
      */
     public function amount($value)
     {
@@ -71,7 +71,7 @@ trait DepositData
      *
      * @param string $value
      *
-     * @return Malico\MeSomb\Payment
+     * @return Hachther\MeSomb\Payment
      */
     public function service($value)
     {

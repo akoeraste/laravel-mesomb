@@ -1,6 +1,6 @@
 <?php
 
-namespace Malico\MeSomb\Helper;
+namespace Hachther\MeSomb\Helper;
 
 trait PaymentData
 {
@@ -74,7 +74,7 @@ trait PaymentData
      *
      * @param int|string $value
      *
-     * @return Malico\MeSomb\Payment
+     * @return Hachther\MeSomb\Payment
      */
     public function payer($value)
     {
@@ -100,7 +100,7 @@ trait PaymentData
      *
      * @param int|string $value
      *
-     * @return Malico\MeSomb\Payment
+     * @return Hachther\MeSomb\Payment
      */
     public function amount($value)
     {
@@ -114,7 +114,7 @@ trait PaymentData
      *
      * @param string $value
      *
-     * @return Malico\MeSomb\Payment
+     * @return Hachther\MeSomb\Payment
      */
     public function reference($value)
     {
@@ -128,7 +128,7 @@ trait PaymentData
      *
      * @param string $value
      *
-     * @return Malico\MeSomb\Payment
+     * @return Hachther\MeSomb\Payment
      */
     public function message($value)
     {
@@ -142,7 +142,7 @@ trait PaymentData
      *
      * @param string $value
      *
-     * @return Malico\MeSomb\Payment
+     * @return Hachther\MeSomb\Payment
      */
     public function currency($value)
     {
@@ -156,7 +156,7 @@ trait PaymentData
      *
      * @param string $value
      *
-     * @return Malico\MeSomb\Payment
+     * @return Hachther\MeSomb\Payment
      */
     public function service($value)
     {
@@ -170,7 +170,7 @@ trait PaymentData
      *
      * @param string $value
      *
-     * @return Malico\MeSomb\Payment
+     * @return Hachther\MeSomb\Payment
      */
     public function fees($value)
     {
@@ -184,7 +184,7 @@ trait PaymentData
      *
      * @param string $value
      *
-     * @return Malico\MeSomb\Payment
+     * @return Hachther\MeSomb\Payment
      */
     public function requestID($value)
     {

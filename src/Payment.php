@@ -1,12 +1,12 @@
 <?php
 
-namespace Malico\MeSomb;
+namespace Hachther\MeSomb;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
-use Malico\MeSomb\Helper\{HandleExceptions, PaymentData, RecordTransaction};
-use Malico\MeSomb\Model\Payment as PaymentModel;
-use Malico\MobileCM\Network;
+use Hachther\MeSomb\Helper\{HandleExceptions, PaymentData, RecordTransaction};
+use Hachther\MeSomb\Model\Payment as PaymentModel;
+use Hachther\MobileCM\Network;
 
 class Payment
 {
@@ -22,7 +22,7 @@ class Payment
     /**
      * Payment Model.
      *
-     * @var null|Malico\MeSomb\Model\Payment
+     * @var null|Hachther\MeSomb\Model\Payment
      */
     protected $payment_model;
 
@@ -106,7 +106,7 @@ class Payment
     /**
      * Send Payment Request.
      *
-     * @return \Malico\MeSomb\Model\Payment
+     * @return \Hachther\MeSomb\Model\Payment
      */
     public function pay()
     {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Malico\MeSomb;
+namespace Hachther\MeSomb;
 
 use Illuminate\Support\ServiceProvider;
 

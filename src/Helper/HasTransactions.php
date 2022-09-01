@@ -1,6 +1,6 @@
 <?php
 
-namespace Malico\MeSomb\Helper;
+namespace Hachther\MeSomb\Helper;
 
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
@@ -11,7 +11,7 @@ trait HasTransactions
      */
     public function transaction(): MorphOne
     {
-        return $this->morphOne('Malico\MeSomb\Model\Transaction', 'transacable');
+        return $this->morphOne('Hachther\MeSomb\Model\Transaction', 'transacable');
     }
 
     /**

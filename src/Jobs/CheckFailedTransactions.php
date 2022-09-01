@@ -1,12 +1,12 @@
 <?php
 
-namespace Malico\MeSomb\Jobs;
+namespace Hachther\MeSomb\Jobs;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\{InteractsWithQueue, SerializesModels};
-use Malico\MeSomb\Transaction;
+use Hachther\MeSomb\Transaction;
 
 class CheckFailedTransactions implements ShouldQueue
 {
@@ -15,14 +15,14 @@ class CheckFailedTransactions implements ShouldQueue
     /**
      * Transaction Model.
      *
-     * @var \Malico\MeSomb\Model\Deposit|\Malico\MeSomb\Model\Payment
+     * @var \Hachther\MeSomb\Model\Deposit|\Hachther\MeSomb\Model\Payment
      */
     protected $model;
 
     /**
      * Create a new job instance.
      *
-     * @param \Malico\MeSomb\Model\Payment $model
+     * @param \Hachther\MeSomb\Model\Payment $model
      *
      * @return void
      */

@@ -1,10 +1,10 @@
 <?php
 
-namespace Malico\MeSomb;
+namespace Hachther\MeSomb;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
-use Malico\MeSomb\Model\Transaction as ModelTransaction;
+use Hachther\MeSomb\Model\Transaction as ModelTransaction;
 
 class Transaction
 {
@@ -22,9 +22,9 @@ class Transaction
     /**
      * Check Transaction sTatus.
      *
-     * @param \Malico\MeSomb\Model\Deposit|\Malico\MeSomb\Model\Payment $model
+     * @param \Hachther\MeSomb\Model\Deposit|\Hachther\MeSomb\Model\Payment $model
      *
-     * @return null|\Malico\MeSomb\Model\Transaction
+     * @return null|\Hachther\MeSomb\Model\Transaction
      */
     public static function checkStatus($model)
     {

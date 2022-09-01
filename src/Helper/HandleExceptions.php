@@ -1,9 +1,9 @@
 <?php
 
-namespace Malico\MeSomb\Helper;
+namespace Hachther\MeSomb\Helper;
 
 use Illuminate\Http\Client\Response;
-use Malico\MeSomb\Exceptions\{InsufficientBalanceException, InvalidAmountException, InvalidPhoneNumberException, InvalidPinException, TimeoutException};
+use Hachther\MeSomb\Exceptions\{InsufficientBalanceException, InvalidAmountException, InvalidPhoneNumberException, InvalidPinException, TimeoutException};
 
 trait HandleExceptions
 {

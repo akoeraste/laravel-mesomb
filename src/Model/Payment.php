@@ -1,9 +1,9 @@
 <?php
 
-namespace Malico\MeSomb\Model;
+namespace Hachther\MeSomb\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Malico\MeSomb\Helper\{HasDeposits, HasTransactions, ModelUUID};
+use Hachther\MeSomb\Helper\{HasDeposits, HasTransactions, ModelUUID};
 
 class Payment extends Model
 {
@@ -50,7 +50,7 @@ class Payment extends Model
     /**
      * Refund Payment.
      *
-     * @return null|\Malico\MeSomb\Model\Deposit
+     * @return null|\Hachther\MeSomb\Model\Deposit
      */
     public function refund()
     {

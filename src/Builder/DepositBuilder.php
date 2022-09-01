@@ -1,9 +1,9 @@
 <?php
 
-namespace Malico\MeSomb\Builder;
+namespace Hachther\MeSomb\Builder;
 
-use Malico\MeSomb\Deposit;
-use Malico\MeSomb\Helper\DepositData;
+use Hachther\MeSomb\Deposit;
+use Hachther\MeSomb\Helper\DepositData;
 
 class DepositBuilder
 {
@@ -28,7 +28,7 @@ class DepositBuilder
     /**
      * Make Deposit.
      *
-     * @return \Malico\MeSomb\Model\Deposit
+     * @return \Hachther\MeSomb\Model\Deposit
      */
     public function pay()
     {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Malico\MeSomb\Helper;
+namespace Hachther\MeSomb\Helper;
 
-use Malico\MeSomb\Builder\PaymentBuilder;
+use Hachther\MeSomb\Builder\PaymentBuilder;
 
 trait HasPayments
 {
@@ -13,7 +13,7 @@ trait HasPayments
      */
     public function payments()
     {
-        return $this->morphMany('Malico\MeSomb\Model\Payment', 'payable');
+        return $this->morphMany('Hachther\MeSomb\Model\Payment', 'payable');
     }
 
     /**
@@ -22,7 +22,7 @@ trait HasPayments
      * @param int|string $payer
      * @param float|int  $amount
      *
-     * @return Malico\MeSomb\Builder\PaymentBuilder
+     * @return Hachther\MeSomb\Builder\PaymentBuilder
      */
     public function payment($payer = null, $amount = null)
     {

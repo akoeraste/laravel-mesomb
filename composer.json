@@ -1,11 +1,11 @@
 {
-    "name": "malico/laravel-mesomb",
+    "name": "hachther/laravel-mesomb",
     "description": "A laravel wrapper on top of Mesomb Payment API",
     "license": "MIT",
     "authors": [
         {
-            "name": "Malico",
-            "email": "hi@malico.me"
+            "name": "Hachther LLC",
+            "email": "contact@hachther.com"
         }
     ],
     "require": {
@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Malico\\MeSomb\\": "src/"
+            "Hachther\\MeSomb\\": "src/"
         }
     },
     "autoload-dev": {
@@ -28,7 +28,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Malico\\MeSomb\\MeSombServiceProvider"
+                "Hachther\\MeSomb\\MeSombServiceProvider"
             ]
         }
     },

@@ -1,9 +1,9 @@
 <?php
 
-namespace Malico\MeSomb\Model;
+namespace Hachther\MeSomb\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Malico\MeSomb\Helper\{HasTransactions, ModelUUID};
+use Hachther\MeSomb\Helper\{HasTransactions, ModelUUID};
 
 class Deposit extends Model
 {

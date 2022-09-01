@@ -1,8 +1,8 @@
 <?php
 
-namespace Malico\MeSomb\Helper;
+namespace Hachther\MeSomb\Helper;
 
-use Malico\MeSomb\Builder\DepositBuilder;
+use Hachther\MeSomb\Builder\DepositBuilder;
 
 trait HasDeposits
 {
@@ -13,7 +13,7 @@ trait HasDeposits
      */
     public function deposits()
     {
-        return $this->morphMany('Malico\MeSomb\Model\Deposit', 'depositable');
+        return $this->morphMany('Hachther\MeSomb\Model\Deposit', 'depositable');
     }
 
     /**
@@ -22,7 +22,7 @@ trait HasDeposits
      * @param int|string $receiver
      * @param float|int  $amount
      *
-     * @return Malico\MeSomb\Builder\DepositBuilder
+     * @return Hachther\MeSomb\Builder\DepositBuilder
      */
     public function deposit($receiver = null, $amount = null)
     {

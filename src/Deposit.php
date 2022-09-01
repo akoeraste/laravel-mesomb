@@ -1,12 +1,12 @@
 <?php
 
-namespace Malico\MeSomb;
+namespace Hachther\MeSomb;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
-use Malico\MeSomb\Helper\{HandleExceptions, RecordTransaction};
-use Malico\MeSomb\Model\Deposit as DepositModel;
-use Malico\MobileCM\Network;
+use Hachther\MeSomb\Helper\{HandleExceptions, RecordTransaction};
+use Hachther\MeSomb\Model\Deposit as DepositModel;
+use Hachther\MobileCM\Network;
 
 class Deposit
 {
@@ -29,7 +29,7 @@ class Deposit
     /**
      * Deposit Model.
      *
-     * @var Malico\MeSomb\Deposit
+     * @var Hachther\MeSomb\Deposit
      */
     protected $deposit_model;
 

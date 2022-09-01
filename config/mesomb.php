@@ -34,7 +34,12 @@ return [
      * Support Payment Methods
      * Array in order of preference
      */
-    'services' => ['MTN', 'ORANGE'],
+    'services' => ['MTN', 'ORANGE', 'AIRTEL'],
+
+    /*
+     * Supported countries
+     */
+    'countries' => ['CM', 'NE'],
 
     /*
      * Set to True if your application uses uuid instead auto-incrmenting ids

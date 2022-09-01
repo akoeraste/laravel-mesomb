@@ -1,9 +1,9 @@
 <?php
 
-namespace Malico\MeSomb\Builder;
+namespace Hachther\MeSomb\Builder;
 
-use Malico\MeSomb\Helper\PaymentData;
-use Malico\MeSomb\Payment;
+use Hachther\MeSomb\Helper\PaymentData;
+use Hachther\MeSomb\Payment;
 
 class PaymentBuilder
 {
@@ -39,7 +39,7 @@ class PaymentBuilder
     /**
      * Make Model Payment.
      *
-     * @return Malico\MeSomb\Model\Payment
+     * @return Hachther\MeSomb\Model\Payment
      */
     public function pay()
     {

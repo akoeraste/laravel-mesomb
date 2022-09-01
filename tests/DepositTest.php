@@ -3,7 +3,7 @@
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\{Config, Http};
 use Illuminate\Support\{Arr, Str};
-use Malico\MeSomb\Deposit;
+use Hachther\MeSomb\Deposit;
 use function Pest\Laravel\assertDatabaseHas;
 
 function fakeDepositResponse()
@@ -13,7 +13,7 @@ function fakeDepositResponse()
     Http::fake([
         'https://mesomb.hachther.com/api/*' => Http::response([
             'success'     => true,
-            'redirect'    => 'https://malico.me',
+            'redirect'    => 'https://hachther.com',
             'message'     => 'Deposit Successful',
             'status'      => 'SUCCESS',
             'transaction' => [

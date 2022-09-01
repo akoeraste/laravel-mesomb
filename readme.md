@@ -20,7 +20,7 @@ API Features and their implementations [https://mesomb.hachther.com/en/api/schem
 Install Package
 
 ```shell
-composer require malico/laravel-mesomb
+composer require hachther/laravel-mesomb
 ```
 
 Publish Configuration Files
@@ -124,7 +124,7 @@ Examples
 
     ```php
     // OrderController.php
-    use Malico\MeSomb\Payment;
+    use Hachther\MeSomb\Payment;
 
     class OrderController extends Controller {
 
@@ -151,7 +151,7 @@ Examples
 
     // Order.php
 
-    use Malico\MeSomb\Helper\HasPayments;
+    use Hachther\MeSomb\Helper\HasPayments;
 
     class Order extends Model
     {
@@ -185,5 +185,7 @@ Examples
 
 #### Author
 
-Malico (Desmond Yong)
-[hi@malico.me](hi@malico.me)
+Hachther LLC
+[contact@hachther.com](contact@hachther.com)
+
+Thank you to Malico ([hi@malico.me](hi@malico.me)) for starting this module.

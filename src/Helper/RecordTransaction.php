@@ -1,6 +1,6 @@
 <?php
 
-namespace Malico\MeSomb\Helper;
+namespace Hachther\MeSomb\Helper;
 
 use Illuminate\Support\{Arr, Carbon};
 
