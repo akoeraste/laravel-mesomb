@@ -12,7 +12,7 @@ trait PaymentData
     protected $amount;
 
     /**
-     * Users Telephone Number.
+     * Customer phone number in the local format.
      *
      * @var int|string
      */
@@ -20,11 +20,19 @@ trait PaymentData
 
     /**
      * Payment Service
-     * MTN | ORANGE.
+     * MTN | ORANGE | AIRTEL.
      *
      * @var string
      */
     protected $service;
+
+    /**
+     * Payment country
+     * CM | NE.
+     *
+     * @var string
+     */
+    protected $country;
 
     /**
      * Reference to add in the payment.
@@ -70,11 +78,26 @@ trait PaymentData
     protected $request_id;
 
     /**
+     * Customer information
+     */
+    protected array $customer;
+
+    /**
+     * Transaction location
+     */
+    protected array $location;
+
+    /**
+     * Transaction product
+     */
+    protected array $product;
+
+    /**
      * Modify Payer.
      *
      * @param int|string $value
      *
-     * @return Hachther\MeSomb\Payment
+     * @return \Hachther\MeSomb\Payment
      */
     public function payer($value)
     {
@@ -88,7 +111,7 @@ trait PaymentData
      *
      * @param string $value
      *
-     * @return void
+     * @return \Hachther\MeSomb\Payment
      */
     public function phone($value)
     {
@@ -100,7 +123,7 @@ trait PaymentData
      *
      * @param int|string $value
      *
-     * @return Hachther\MeSomb\Payment
+     * @return \Hachther\MeSomb\Payment
      */
     public function amount($value)
     {
@@ -114,7 +137,7 @@ trait PaymentData
      *
      * @param string $value
      *
-     * @return Hachther\MeSomb\Payment
+     * @return \Hachther\MeSomb\Payment
      */
     public function reference($value)
     {
@@ -128,7 +151,7 @@ trait PaymentData
      *
      * @param string $value
      *
-     * @return Hachther\MeSomb\Payment
+     * @return \Hachther\MeSomb\Payment
      */
     public function message($value)
     {
@@ -142,7 +165,7 @@ trait PaymentData
      *
      * @param string $value
      *
-     * @return Hachther\MeSomb\Payment
+     * @return \Hachther\MeSomb\Payment
      */
     public function currency($value)
     {
@@ -156,7 +179,7 @@ trait PaymentData
      *
      * @param string $value
      *
-     * @return Hachther\MeSomb\Payment
+     * @return \Hachther\MeSomb\Payment
      */
     public function service($value)
     {
@@ -170,7 +193,7 @@ trait PaymentData
      *
      * @param string $value
      *
-     * @return Hachther\MeSomb\Payment
+     * @return \Hachther\MeSomb\Payment
      */
     public function fees($value)
     {
@@ -184,7 +207,7 @@ trait PaymentData
      *
      * @param string $value
      *
-     * @return Hachther\MeSomb\Payment
+     * @return \Hachther\MeSomb\Payment
      */
     public function requestID($value)
     {

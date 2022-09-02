@@ -6,7 +6,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Hachther\MeSomb\Helper\{HandleExceptions, RecordTransaction};
 use Hachther\MeSomb\Model\Deposit as DepositModel;
-use Hachther\MobileCM\Network;
 
 class Deposit
 {
@@ -29,9 +28,9 @@ class Deposit
     /**
      * Deposit Model.
      *
-     * @var Hachther\MeSomb\Deposit
+     * @var \Hachther\MeSomb\Deposit
      */
-    protected $deposit_model;
+    protected $depositModel;
 
     public function __construct($receiver, $amount, $service = null)
     {
@@ -39,7 +38,7 @@ class Deposit
 
         $this->receiver = $receiver;
         $this->amount = $amount;
-        $this->service = $service ?? $this->getReceiverService();
+        $this->service = $service;
     }
 
     /**
@@ -54,27 +53,13 @@ class Deposit
     }
 
     /**
-     * Determine receiver's Network.
-     */
-    protected function getReceiverService(): string
-    {
-        if (Network::isOrange($this->receiver)) {
-            return 'ORANGE';
-        } elseif (Network::isMTN($this->receiver)) {
-            return 'MTN';
-        } else {
-            return config('mesomb.services')[0];
-        }
-    }
-
-    /**
      * Save Deposit bef[return description]ore request.
      *
      * @param array $data
      */
     protected function saveDeposit($data): array
     {
-        $this->deposit_model = DepositModel::create($data);
+        $this->depositModel = DepositModel::create($data);
 
         $data['pin'] = config('mesomb.pin');
 
@@ -104,9 +89,9 @@ class Deposit
     {
         $data = Arr::only($response, ['status', 'success', 'message']);
 
-        $this->deposit_model->update($data);
+        $this->depositModel->update($data);
 
-        $this->recordTransaction($response, $this->deposit_model);
+        $this->recordTransaction($response, $this->depositModel);
     }
 
     /**
@@ -125,6 +110,6 @@ class Deposit
             $this->handleException($response);
         }
 
-        return $this->deposit_model;
+        return $this->depositModel;
     }
 }

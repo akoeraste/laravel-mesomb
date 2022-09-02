@@ -6,7 +6,7 @@ use Illuminate\Support\{Arr, Carbon};
 
 trait RecordTransaction
 {
-    protected $transaction_fields = [
+    protected $transactionFields = [
         'pk',
         'status',
         'amount',
@@ -19,6 +19,9 @@ trait RecordTransaction
         'ts',
         'direction',
         'reference',
+        'customer',
+        'location',
+        'product',
     ];
 
     /**
@@ -26,7 +29,7 @@ trait RecordTransaction
      */
     protected function extractSavableTransactionDetails(array $data): array
     {
-        return Arr::only($data, $this->transaction_fields);
+        return Arr::only($data, $this->transactionFields);
     }
 
     /**
@@ -40,6 +43,9 @@ trait RecordTransaction
 
         $data['ts'] = Carbon::parse($data['ts']);
         $data['direction'] = (string) ($data['direction']);
+        $data['customer'] = json_encode($data['customer']);
+        $data['location'] = json_encode($data['location']);
+        $data['product'] = json_encode($data['product']);
 
         $model->transaction()->updateOrCreate($data);
     }

@@ -2,18 +2,17 @@
 
 namespace Hachther\MeSomb\Helper;
 
+use Hachther\MeSomb\Exceptions\ApplicationNotFoundException;
+use Hachther\MeSomb\Exceptions\InsufficientBalanceException;
+use Hachther\MeSomb\Exceptions\InvalidAmountException;
+use Hachther\MeSomb\Exceptions\InvalidPhoneNumberException;
+use Hachther\MeSomb\Exceptions\InvalidPinException;
+use Hachther\MeSomb\Exceptions\TimeoutException;
 use Illuminate\Http\Client\Response;
-use Hachther\MeSomb\Exceptions\{InsufficientBalanceException,
-    InvalidAmountException,
-    InvalidPhoneNumberException,
-    InvalidPinException,
-    TimeoutException,
-    ApplicationNotFoundException
-};
 
 trait HandleExceptions
 {
-    public $errorCodes = [
+    public array $errorCodes = [
         'subscriber-insufficient-balance' => InsufficientBalanceException::class,
         'application-not-found' => ApplicationNotFoundException::class,
         'subscriber-not-found' => InvalidPhoneNumberException::class,
@@ -25,7 +24,7 @@ trait HandleExceptions
         'subscriber-internal-error' => TimeoutException::class,
     ];
 
-    public function handleException(Response $response)
+    public function handleException(Response $response): void
     {
         if (!config('mesomb.throw_exceptions')) {
             return;
