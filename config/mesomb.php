@@ -11,19 +11,19 @@ return [
      * MeSomb Application Key
      * Copy from https://mesomb.hachther.com/en/applications/{id}
      */
-    'key' => env('MeSomb_APP_KEY'),
+    'key' => env('MESOMB_API_KEY'),
 
     /*
      * MeSomb API Application Key
      * Copy from https://mesomb.hachther.com/en/applications/{id}
      */
-    'api_key' => env('MeSomb_API_KEY'),
+    'api_key' => env('MESOMB_API_KEY'),
 
     /*
      * PIN used for MeSomb Pin
      * Configure @ https://mesomb.hachther.com/en/applications/{id}/settings/setpin/
      */
-    'pin' => env('MeSomb_PIN', null),
+    'pin' => env('MESOMB_PIN', null),
 
     /*
      * Supported Payment Methods
