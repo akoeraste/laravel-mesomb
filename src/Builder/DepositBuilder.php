@@ -10,7 +10,7 @@ class DepositBuilder
     use DepositData;
 
     /**
-     * Payment Owner Model.
+     * Collect Owner Model.
      *
      * @var Illuminate\Database\Eloquent\Model
      */

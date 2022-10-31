@@ -7,7 +7,7 @@ use Hachther\MeSomb\Builder\PaymentBuilder;
 trait HasPayments
 {
     /**
-     * Model Payment.
+     * Model Collect.
      *
      * @return Illuminate\Database\Eloquent\Relations\MorphOne
      */
@@ -17,7 +17,7 @@ trait HasPayments
     }
 
     /**
-     * Make Payment.
+     * Make Collect.
      *
      * @param int|string $payer
      * @param float|int  $amount

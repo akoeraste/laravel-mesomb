@@ -19,7 +19,7 @@ trait DepositData
     protected $receiver;
 
     /**
-     * Payment Service
+     * Collect Service
      * MTN | ORANGE.
      *
      * @var string

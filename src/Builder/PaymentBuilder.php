@@ -10,7 +10,7 @@ class PaymentBuilder
     use PaymentData;
 
     /**
-     * Payment Owner Model.
+     * Collect Owner Model.
      *
      * @var Illuminate\Database\Eloquent\Model
      */
@@ -37,9 +37,9 @@ class PaymentBuilder
     }
 
     /**
-     * Make Model Payment.
+     * Make Model Collect.
      *
-     * @return Hachther\MeSomb\Model\Payment
+     * @return Hachther\MeSomb\Model\Collect
      */
     public function pay()
     {

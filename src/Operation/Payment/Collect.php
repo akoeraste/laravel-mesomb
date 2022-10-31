@@ -1,42 +1,57 @@
 <?php
 
-namespace Hachther\MeSomb;
+namespace Hachther\MeSomb\Operation\Payment;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Http;
 use Hachther\MeSomb\Helper\HandleExceptions;
 use Hachther\MeSomb\Helper\PaymentData;
 use Hachther\MeSomb\Helper\RecordTransaction;
+use Hachther\MeSomb\Helper\SignedRequest;
 use Hachther\MeSomb\Model\Payment as PaymentModel;
+use Hachther\MeSomb\Operation\Signature;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Http;
 
-class Payment
+class Collect
 {
     use HandleExceptions, PaymentData, RecordTransaction;
 
     /**
-     * MeSomb Payment Payment URL.
+     * MeSomb Collect URL.
      *
      * @var string
      */
     protected $url;
 
     /**
-     * Payment Model.
+     * Collect Model.
      *
-     * @var null|\Hachther\MeSomb\Model\Payment
+     * @var null|PaymentModel
      */
     protected $paymentModel;
 
 
+    /**
+     * @param string $payer the account number to collect from
+     * @param int $amount amount to collect
+     * @param string $service MTN, ORANGE, AIRTEL
+     * @param string $country country CM, NE
+     * @param string $currency code of the currency of the amount
+     * @param bool $fees if you want MeSomb to deduct he fees in the collected amount
+     * @param bool $conversion In case of foreign currently defined if you want to rely on MeSomb to convert the amount in the local currency
+     * @param string|null $message Message to include in the transaction
+     * @param string|null $redirect Where to redirect after the payment
+     */
     public function __construct(
-        $payer,
-        $amount,
-        $service,
-        $country = 'CM',
-        $currency = 'XAF',
-        $fees = true,
-        $message = null,
-        $redirect = null,
+        string $payer,
+        int $amount,
+        string $service,
+        string $country = 'CM',
+        string $currency = 'XAF',
+        bool $fees = true,
+        bool $conversion = true,
+        ?string $message = null,
+        ?string $redirect = null,
     ) {
         $this->generateURL();
 
@@ -46,22 +61,25 @@ class Payment
         $this->country = $country ?? 'CM';
         $this->currency = $currency;
         $this->fees = $fees;
+        $this->conversion = $conversion;
         $this->message = $message;
         $this->redirect = $redirect;
     }
 
     /**
-     * Generate Payment URL.
+     * Generate Collect URL.
      */
-    protected function generateURL(): void
+    protected function generateURL(): string
     {
         $version = config('mesomb.version');
+        $host = config('mesomb.host');
+        $locale = App::currentLocale() == 'fr' ? 'fr' : 'en';
 
-        $this->url = "https://mesomb.hachther.com/api/{$version}/payment/online/";
+        return "{$host}/{$locale}/api/{$version}/payment/collect/";
     }
 
     /**
-     * Save Payment before request.
+     * Save Collect before request.
      *
      * @param array $data
      */
@@ -98,28 +116,41 @@ class Payment
     }
 
     /**
-     * Send Payment Request.
+     * Send Collect Request.
      *
-     * @return \Hachther\MeSomb\Model\Payment
+     * @return PaymentModel|null
+     * @throws \Hachther\MeSomb\Exceptions\InvalidClientRequestException
+     * @throws \Hachther\MeSomb\Exceptions\PermissionDeniedException
+     * @throws \Hachther\MeSomb\Exceptions\ServerException
+     * @throws \Hachther\MeSomb\Exceptions\ServiceNotFoundException
      */
-    public function pay()
+    public function pay(): ?PaymentModel
     {
         $data = $this->prepareData();
+        $nonce = Signature::nonceGenerator();
+        $date = new \DateTime();
+        $url = $this->generateURL();
+
+        $authorization = SignedRequest::getAuthorization('POST', $url, $date, $nonce, ['content-type' => 'application/json'], $data);
 
         $headers = [
-            'X-MeSomb-Application'   => config('mesomb.key'),
-            'X-MeSomb-RequestId'     => $this->request_id,
+            'x-mesomb-date' => $date->getTimestamp(),
+            'x-mesomb-nonce' => $nonce,
+            'Authorization' => $authorization,
+            'Content-Type' => 'application/json',
+            'X-MeSomb-Application' => config('mesomb.key'),
             'X-MeSomb-OperationMode' => config('mesomb.mode'),
+            'X-MeSomb-TrxID' => $this->paymentModel->id,
         ];
 
         $response = Http::withHeaders($headers)
-            ->post($this->url, $data);
-
-        $this->recordPayment($response->json());
+            ->post($url, $data);
 
         if ($response->failed()) {
             $this->handleException($response);
         }
+
+        $this->recordPayment($response->json(), $nonce);
 
         return $this->paymentModel;
     }
@@ -131,28 +162,19 @@ class Payment
      *
      * @return void
      */
-    protected function recordPayment($response)
+    protected function recordPayment($response, string $nonce): void
     {
         $data = Arr::only($response, ['status', 'success', 'message']);
 
         $this->paymentModel->update($data);
 
-        $this->recordTransaction($response, $this->paymentModel);
+        $this->recordTransaction($response, $this->paymentModel, $nonce);
     }
 
     /**
      * Details on the customer performing the payment. This will help MeSomb to build for you analytics based on customer (Example: Top N customers)
      *
-     * @param array $customer = [
-     *  'email' => string,
-     *  'phone' => string,
-     *  'town' => string,
-     *  'region' => string,
-     *  'country' => string, // Country code of the country
-     *  'first_name' => string,
-     *  'last_name' => string,
-     *  'address' => string
-     * ]
+     * @param array<string, string> $customer = {'email': string, 'phone': string, 'town': string, 'region': string, 'country': string, 'first_name': string, 'last_name': string, 'address': string
      */
     public function setCustomer(array $customer): void
     {
@@ -162,11 +184,7 @@ class Payment
     /**
      * Location for where the transaction was done. This will help MeSomb to build for you location based analytics based on customer (Example: transactions per region)
      *
-     * @param array $location = [
-     *  'town' => string,
-     *  'region' => string,
-     *  'country' => string //country code
-     * ]
+     * @param array<string, string> $location {'town': string, 'region': string, 'country': string}
      * @return void
      */
     public function setLocation(array $location): void
@@ -177,11 +195,7 @@ class Payment
     /**
      * Give details on the product purchase will help for product-based analytics
      *
-     * @param array $product = [
-     *  'id' => string,
-     *  'name' => string,
-     *  'category' => string
-     * ]
+     * @param array $product {'id': string, 'name': string, 'category': string }
      * @return void
      */
     public function setProduct(array $product)

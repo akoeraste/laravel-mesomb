@@ -3,6 +3,9 @@
 namespace Hachther\MeSomb\Helper;
 
 use Illuminate\Support\{Arr, Carbon};
+use Hachther\MeSomb\Model\Deposit;
+use Hachther\MeSomb\Model\Payment;
+use Hachther\MeSomb\Model\Transaction;
 
 trait RecordTransaction
 {
@@ -21,7 +24,7 @@ trait RecordTransaction
         'reference',
         'customer',
         'location',
-        'product',
+        'products',
     ];
 
     /**
@@ -37,7 +40,7 @@ trait RecordTransaction
      *
      * @param array $data
      */
-    protected function saveTransaction($data, $model): void
+    protected function saveTransaction($data, $model, string $nonce): void
     {
         $data = $this->extractSavableTransactionDetails($data);
 
@@ -45,7 +48,8 @@ trait RecordTransaction
         $data['direction'] = (string) ($data['direction']);
         $data['customer'] = json_encode($data['customer']);
         $data['location'] = json_encode($data['location']);
-        $data['product'] = json_encode($data['product']);
+        $data['products'] = json_encode($data['products']);
+        $data['nonce'] = $nonce;
 
         $model->transaction()->updateOrCreate($data);
     }
@@ -53,14 +57,14 @@ trait RecordTransaction
     /**
      * Save Transaction.
      *
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param Deposit|Payment|Transaction $model
      */
-    protected function recordTransaction(array $response, $model): void
+    protected function recordTransaction(array $response, Deposit|Payment|Transaction $model, string $nonce = null): void
     {
         if (Arr::has($response, 'transaction')) {
             $transaction = Arr::get($response, 'transaction');
 
-            $this->saveTransaction($transaction, $model);
+            $this->saveTransaction($transaction, $model, $nonce);
         }
     }
 }

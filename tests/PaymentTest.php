@@ -17,7 +17,7 @@ function fakePaymentResponse()
         'https://mesomb.hachther.com/api/*' => Http::response([
             'success'     => true,
             'redirect'    => 'https://hachther.com',
-            'message'     => 'Payment Successful',
+            'message'     => 'Collect Successful',
             'status'      => 'SUCCESS',
             'transaction' => [
                 'id'          => Str::uuid(),

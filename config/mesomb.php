@@ -5,7 +5,12 @@ return [
     /*
      * Api Version
      */
-    'version' => 'v1.0',
+    'version' => env('MESOMB_API_VERSION', 'v1.1'),
+
+    /*
+     * MeSomb Service Host
+     */
+    'host' => env('MESOMB_API_HOST', 'https://mesomb.hachther.com'),
 
     /*
      * MeSomb Application Key
@@ -20,18 +25,36 @@ return [
     'api_key' => env('MESOMB_API_KEY'),
 
     /*
+     * MeSomb Access Key
+     * Copy from https://mesomb.hachther.com/en/applications/{id}
+     */
+    'access_key' => env('MESOMB_ACCESS_KEY'),
+
+    /*
+     * MeSomb Secret Key
+     * Copy from https://mesomb.hachther.com/en/applications/{id}
+     */
+    'secret_key' => env('MESOMB_SECRET_KEY'),
+
+    /*
+     * MeSomb Secret Key
+     * Copy from https://mesomb.hachther.com/en/applications/{id}
+     */
+    'algorithm' => 'HMAC-SHA1',
+
+    /*
      * PIN used for MeSomb Pin
      * Configure @ https://mesomb.hachther.com/en/applications/{id}/settings/setpin/
      */
     'pin' => env('MESOMB_PIN', null),
 
     /*
-     * Supported Payment Methods
+     * Supported Collect Methods
      */
     'currencies' => ['XAF', 'XOF'],
 
     /*
-     * Support Payment Methods
+     * Support Collect Methods
      * Array in order of preference
      */
     'services' => ['MTN', 'ORANGE', 'AIRTEL'],

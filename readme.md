@@ -4,111 +4,47 @@ Laravel Wrapper on top of MeSomb Payment API
 
 ## Roadmap
 
-API Features and their implementations [https://mesomb.hachther.com/en/api/schema/](https://mesomb.hachther.com/en/api/schema/)
+API Features and their implementations [https://mesomb.hachther.com/en/api/v1.1/schema/](https://mesomb.hachther.com/en/api/v1.1/schema/)
 
-| Feature              | Status  |
-| -------------------- | ------- |
-| Payment              | &#9745; |
-| Transaction Status   | &#9745; |
-| Application Status   | &#9745; |
-| Deposits             | &#9745; |
-| Test                 | &#9744; |
-| Better Documentation | &#9744; |
+| Feature              | Status  | Documentation                                                    |
+|----------------------|---------|------------------------------------------------------------------|
+| Payment              | &#9745; | [Check the documentation](docs/README.md#Collect)                |
+| Transaction Status   | &#9745; | [Check the documentation](docs/README.md#TransactioncheckStatus) |
+| Application Status   | &#9745; | [Check the documentation](docs/README.md#ApplicationcheckStatus) |
+| Deposits             | &#9745; | [Check the documentation](docs/README.md#Deposit)                |
+| Test                 | &#9744; ||
+| Better Documentation | &#9744; ||
 
 ## Installation
 
-Install Package
+Before you start you must first register your service and MeSomb and get API Access keys. Please follow [this tutorial](https://mesomb.hachther.com/en/blog/tutorials/how-to-register-your-service-on-mesomb/).
+
+### Install Package
 
 ```shell
 composer require hachther/laravel-mesomb
 ```
 
-Publish Configuration Files
+### Publish Configuration Files
+
+Setting the following parameters from MeSomb
+
+Get the below information from MeSomb after followed the above tutorial.
+```dotenv
+MESOMB_API_KEY=<ApplicationKey>
+MESOMB_API_HOST=https://mesomb.hachther.com
+MESOMB_API_VERSION=v1.1
+MESOMB_ACCESS_KEY=<AccessKey>
+MESOMB_SECRET_KEY=<SecretKey>
+```
+
+Publish configurations file
 
 ```shell
 php artisan vendor:publish --tag=mesomb-configuration
 ```
 
-Sign up and Create new Application at [https://mesomb.hachther.com/](https://mesomb.hachther.com/). Provide appropriate from your dashboard configure for the `config/mesomb.php`;
-
-```php
-<?php
-
-return [
-
-    /**
-     * Api Version
-     *
-     * @var string
-     */
-    'version' => 'v1.0',
-
-    /**
-     * MeSomb Application Key
-     * Copy from https://mesomb.hachther.com/en/applications/{id}
-     *
-     * @var string
-     */
-    'key' => env('MESOMB_APP_KEY'),
-
-    /**
-     * MeSomb API Application Key
-     * Copy from https://mesomb.hachther.com/en/applications/{id}
-     *
-     * @var string
-     */
-    'api_key' => env('MESOMB_API_KEY'),
-
-    /**
-     * PIN used for MeSomb Pin
-     * Configure @ https://mesomb.hachther.com/en/applications/{id}/settings/setpin/
-     *
-     * @var int|string
-     */
-    'pin' => env('MESOMB_PIN', null),
-
-    /**
-     * Supported Payment Methods
-     *
-     * @var array
-     */
-    'currencies' => ['XAF', 'XOF'],
-
-    /**
-     * Support Payment Methods
-     * Array in order of preference
-     *
-     * @var array
-     */
-    'services' => ['MTN', 'ORANGE', 'AIRTEL'],
-
-    /**
-     * Set to True if your application uses uuid instead auto-incrmenting ids
-     *
-     * @var bool
-     */
-    'uses_uuid' => false,
-
-
-    /*
-     * Used to store the application Status
-     */
-    'application_cache_key' => 'mesomb_application_status',
-
-    /*
-     * You can choose to wait till the application to wait till the payment is approved
-     * or queue the payment request check later
-     * enum: asynchronous, synchronous
-
-     */
-    'mode' => 'synchronous',
-
-    'throw_exceptions' => true,
-];
-
-```
-
-Migrate Mesomb Transaction Tables
+### Migrate Mesomb Transaction Tables
 
 ```shell
 php artisan migrate
@@ -124,13 +60,13 @@ Examples
 
     ```php
     // OrderController.php
-    use Hachther\MeSomb\Payment;
+    use Hachther\MeSomb\Operation\Payment\Collect;
 
     class OrderController extends Controller {
 
         public function confirmOrder()
         {
-            $request = new Payment('67xxxxxxx', 1000, 'MTN', 'CM');
+            $request = new Collect('67xxxxxxx', 1000, 'MTN', 'CM');
 
             $payment = $request->pay();
 

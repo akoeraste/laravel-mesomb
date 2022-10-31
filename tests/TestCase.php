@@ -4,9 +4,9 @@ namespace Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Hachther\MeSomb\MeSombServiceProvider;
-use Orchestra\Testbench\TestCase as TestbenchTestCase;
+use Orchestra\Testbench\TestCase as BaseTestCase;
 
-abstract class TestCase extends TestbenchTestCase
+abstract class TestCase extends BaseTestCase
 {
     use RefreshDatabase;
 

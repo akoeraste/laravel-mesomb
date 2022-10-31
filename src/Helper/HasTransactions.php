@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 trait HasTransactions
 {
     /**
-     * Deposit|Payment Transaction.
+     * Deposit|Collect Transaction.
      */
     public function transaction(): MorphOne
     {

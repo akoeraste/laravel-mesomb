@@ -19,7 +19,7 @@ trait PaymentData
     protected $payer;
 
     /**
-     * Payment Service
+     * Collect Service
      * MTN | ORANGE | AIRTEL.
      *
      * @var string
@@ -27,7 +27,7 @@ trait PaymentData
     protected $service;
 
     /**
-     * Payment country
+     * Collect country
      * CM | NE.
      *
      * @var string
@@ -49,6 +49,13 @@ trait PaymentData
     protected $fees;
 
     /**
+     * In case of foreign currently defined if you want to rely on MeSomb to convert the amount in the local currency
+     *
+     * @var bool
+     */
+    protected $conversion;
+
+    /**
      * Trading Currency
      * XAF | XOF.
      *
@@ -57,7 +64,7 @@ trait PaymentData
     protected $currency;
 
     /**
-     * Payment Description.
+     * Collect Description.
      *
      * @var string
      */
@@ -80,17 +87,17 @@ trait PaymentData
     /**
      * Customer information
      */
-    protected array $customer;
+    protected ?array $customer = null;
 
     /**
      * Transaction location
      */
-    protected array $location;
+    protected ?array $location = null;
 
     /**
      * Transaction product
      */
-    protected array $product;
+    protected ?array $product = null;
 
     /**
      * Modify Payer.

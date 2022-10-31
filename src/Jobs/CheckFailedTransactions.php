@@ -2,11 +2,13 @@
 
 namespace Hachther\MeSomb\Jobs;
 
+use Hachther\MeSomb\Model\Deposit;
+use Hachther\MeSomb\Model\Payment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\{InteractsWithQueue, SerializesModels};
-use Hachther\MeSomb\Transaction;
+use Hachther\MeSomb\Operation\Payment\Transaction;
 
 class CheckFailedTransactions implements ShouldQueue
 {
@@ -15,14 +17,14 @@ class CheckFailedTransactions implements ShouldQueue
     /**
      * Transaction Model.
      *
-     * @var \Hachther\MeSomb\Model\Deposit|\Hachther\MeSomb\Model\Payment
+     * @var Deposit|Payment
      */
     protected $model;
 
     /**
      * Create a new job instance.
      *
-     * @param \Hachther\MeSomb\Model\Payment $model
+     * @param Payment $model
      *
      * @return void
      */
@@ -35,13 +37,16 @@ class CheckFailedTransactions implements ShouldQueue
      * Execute the job.
      *
      * @return void
+     * @throws \Illuminate\Http\Client\RequestException
      */
     public function handle()
     {
-        $transaction = Transaction::checkStatus($this->model);
+        $transactions = Transaction::checkStatus($this->model);
 
-        if ($transaction->successful()) {
-            $this->model->toggleToSuccess();
+        foreach ($transactions as $transaction) {
+            if ($transaction->successful()) {
+                $this->model->toggleToSuccess();
+            }
         }
     }
 }
