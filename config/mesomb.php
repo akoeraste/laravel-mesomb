@@ -37,6 +37,11 @@ return [
     'secret_key' => env('MESOMB_SECRET_KEY'),
 
     /*
+     * Number of second to wait before timeout a transaction
+     */
+    'timeout' => env('MESOMB_TIMEOUT', 60),
+
+    /*
      * MeSomb Secret Key
      * Copy from https://mesomb.hachther.com/en/applications/{id}
      */

@@ -141,6 +141,7 @@ class Deposit
         ];
 
         $response = Http::withHeaders($headers)
+            ->timeout(config('mesomb.timeout'))
             ->post($url, $data);
 
 
