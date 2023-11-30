@@ -125,6 +125,7 @@ class Deposit
     public function pay(): DepositModel
     {
         $data = $this->prepareData();
+        $data['source'] = 'Laravel/v'.\app()->version();
         $nonce = Signature::nonceGenerator();
         $date = new \DateTime();
         $url = $this->generateURL();

@@ -22,7 +22,7 @@ trait HasPayments
      * @param int|string $payer
      * @param float|int  $amount
      *
-     * @return Hachther\MeSomb\Builder\PaymentBuilder
+     * @return PaymentBuilder
      */
     public function payment($payer = null, $amount = null)
     {

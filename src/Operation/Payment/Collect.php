@@ -127,6 +127,7 @@ class Collect
     public function pay(): ?PaymentModel
     {
         $data = $this->prepareData();
+        $data['source'] = 'Laravel/v'.\app()->version();
         $nonce = Signature::nonceGenerator();
         $date = new \DateTime();
         $url = $this->generateURL();

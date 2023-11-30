@@ -19,7 +19,7 @@ class Signature
     {
         $algorithm = config('mesomb.algorithm');
         $parse = parse_url($url);
-        $canonicalQuery = $parse['query'] ?? '';
+        $canonicalQuery = isset($parse['query']) ? $parse['query'] : '';
 
         $timestamp = $date->getTimestamp();
 
@@ -30,7 +30,9 @@ class Signature
         $headers['x-mesomb-date'] = $timestamp;
         $headers['x-mesomb-nonce'] = $nonce;
         ksort($headers);
-        $callback = fn (string $k, string $v): string => strtolower($k).":".$v;
+        $callback = function ($k, $v) {
+            return strtolower($k) . ":" . $v;
+        };
         $canonicalHeaders = implode("\n", array_map($callback, array_keys($headers), array_values($headers)));
 
         if (!isset($body)) {

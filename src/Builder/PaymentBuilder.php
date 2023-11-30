@@ -3,7 +3,7 @@
 namespace Hachther\MeSomb\Builder;
 
 use Hachther\MeSomb\Helper\PaymentData;
-use Hachther\MeSomb\Payment;
+use Hachther\MeSomb\Model\Payment;
 
 class PaymentBuilder
 {
