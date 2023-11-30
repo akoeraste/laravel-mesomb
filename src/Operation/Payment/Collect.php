@@ -128,6 +128,12 @@ class Collect
     {
         $data = $this->prepareData();
         $data['source'] = 'Laravel/v'.\app()->version();
+        $ip = request()->ip();
+        if (empty($data['location'])) {
+            $data['location'] = array(
+                'ip' => $ip
+            );
+        }
         $nonce = Signature::nonceGenerator();
         $date = new \DateTime();
         $url = $this->generateURL();
@@ -139,14 +145,17 @@ class Collect
             'x-mesomb-nonce' => $nonce,
             'Authorization' => $authorization,
             'Content-Type' => 'application/json',
-            'X-MeSomb-Application' => config('mesomb.key'),
+            'X-MeSomb-Application' => config('mesomb.app_key'),
             'X-MeSomb-OperationMode' => config('mesomb.mode'),
             'X-MeSomb-TrxID' => $this->paymentModel->id,
         ];
 
         $response = Http::withHeaders($headers)
-            ->timeout(config('mesomb.timeout'))
-            ->post($url, $data);
+            ->timeout(config('mesomb.timeout'));
+        if (!config('mesomb.ssl_verify')) {
+            $response = $response->withoutVerifying();
+        }
+        $response = $response->post($url, $data);
 
         if ($response->failed()) {
             $this->handleException($response);

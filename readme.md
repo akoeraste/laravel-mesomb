@@ -31,11 +31,12 @@ Setting the following parameters from MeSomb
 
 Get the below information from MeSomb after followed the above tutorial.
 ```dotenv
-MESOMB_API_KEY=<ApplicationKey>
+MESOMB_APP_KEY=<ApplicationKey>
 MESOMB_API_HOST=https://mesomb.hachther.com
 MESOMB_API_VERSION=v1.1
 MESOMB_ACCESS_KEY=<AccessKey>
 MESOMB_SECRET_KEY=<SecretKey>
+MESOMB_SSL_VERIFY=true
 ```
 
 Publish configurations file

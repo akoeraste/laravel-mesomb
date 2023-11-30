@@ -52,7 +52,7 @@ class Transaction
         $url = self::generateURL('transactions/', $ids);
         $date = new DateTime();
         $nonce = "";
-        $applicationKey = config('mesomb.api_key');
+        $applicationKey = config('mesomb.app_key');
 
         $authorization = SignedRequest::getAuthorization('GET', $url, $date, $nonce);
 

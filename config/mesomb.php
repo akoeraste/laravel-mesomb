@@ -16,13 +16,7 @@ return [
      * MeSomb Application Key
      * Copy from https://mesomb.hachther.com/en/applications/{id}
      */
-    'key' => env('MESOMB_API_KEY'),
-
-    /*
-     * MeSomb API Application Key
-     * Copy from https://mesomb.hachther.com/en/applications/{id}
-     */
-    'api_key' => env('MESOMB_API_KEY'),
+    'app_key' => env('MESOMB_APP_KEY'),
 
     /*
      * MeSomb Access Key
@@ -35,6 +29,11 @@ return [
      * Copy from https://mesomb.hachther.com/en/applications/{id}
      */
     'secret_key' => env('MESOMB_SECRET_KEY'),
+
+    /*
+     * Set MESOMB_SSL_VERIFY to false if you want to run your http request without verification
+     */
+    'ssl_verify' => env('MESOMB_SSL_VERIFY', true),
 
     /*
      * Number of second to wait before timeout a transaction

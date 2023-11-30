@@ -126,6 +126,12 @@ class Deposit
     {
         $data = $this->prepareData();
         $data['source'] = 'Laravel/v'.\app()->version();
+        $ip = request()->ip();
+        if (empty($data['location'])) {
+            $data['location'] = array(
+                'ip' => $ip
+            );
+        }
         $nonce = Signature::nonceGenerator();
         $date = new \DateTime();
         $url = $this->generateURL();
@@ -142,9 +148,11 @@ class Deposit
         ];
 
         $response = Http::withHeaders($headers)
-            ->timeout(config('mesomb.timeout'))
-            ->post($url, $data);
-
+            ->timeout(config('mesomb.timeout'));
+        if (!config('mesomb.ssl_verify')) {
+            $response = $response->withoutVerifying();
+        }
+        $response = $response->post($url, $data);
 
         if ($response->failed()) {
             $this->handleException($response);

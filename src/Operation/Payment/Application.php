@@ -44,7 +44,7 @@ class Application
      */
     public static function checkStatus(): array
     {
-        $applicationKey = config('mesomb.api_key');
+        $applicationKey = config('mesomb.app_key');
         $url = self::generateURL('status/');
         $date = new DateTime();
         $nonce = "";
