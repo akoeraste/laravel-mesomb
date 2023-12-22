@@ -2,7 +2,7 @@
 
 namespace Hachther\MeSomb\Builder;
 
-use Hachther\MeSomb\Deposit;
+use Hachther\MeSomb\Operation\Payment\Deposit;
 use Hachther\MeSomb\Helper\DepositData;
 
 class DepositBuilder

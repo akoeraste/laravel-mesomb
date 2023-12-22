@@ -39,7 +39,7 @@ class PaymentBuilder
     /**
      * Make Model Collect.
      *
-     * @return Hachther\MeSomb\Model\Collect
+     * @return \Hachther\MeSomb\Model\Payment
      */
     public function pay()
     {
