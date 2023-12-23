@@ -2,7 +2,7 @@
     "name": "hachther/laravel-mesomb",
     "description": "A laravel wrapper on top of Mesomb Payment API",
     "license": "MIT",
-    "version": "1.7.2",
+    "version": "1.8.0",
     "authors": [
         {
             "name": "Hachther LLC",

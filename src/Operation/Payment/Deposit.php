@@ -23,11 +23,25 @@ class Deposit
     protected $url;
 
     /**
-     * Reference to add in the payment.
+     * Your service application key on MeSomb
      *
-     * @var string
+     * @var string $applicationKey
      */
-    protected $pin;
+    private string $applicationKey;
+
+    /**
+     * Your access key provided by MeSomb
+     *
+     * @var string $accessKey
+     */
+    private string $accessKey;
+
+    /**
+     * Your secret key provided by MeSomb
+     *
+     * @var string $secretKey
+     */
+    private string $secretKey;
 
     /**
      * Deposit Model.
@@ -52,6 +66,10 @@ class Deposit
         string $currency = 'XAF',
         bool $conversion = true,
     ) {
+        $this->applicationKey = config('mesomb.app_key');
+        $this->secretKey = config('mesomb.secret_key');
+        $this->accessKey = config('mesomb.access_key');
+
         $this->generateURL();
 
         $this->receiver = $receiver;
@@ -82,8 +100,6 @@ class Deposit
     protected function saveDeposit($data): array
     {
         $this->depositModel = DepositModel::create($data);
-
-        $data['pin'] = config('mesomb.pin');
 
         return $data;
     }
@@ -136,14 +152,15 @@ class Deposit
         $date = new \DateTime();
         $url = $this->generateURL();
 
-        $authorization = SignedRequest::getAuthorization('POST', $url, $date, $nonce, ['content-type' => 'application/json'], $data);
+        $credentials = ['accessKey' => $this->accessKey, 'secretKey' => $this->secretKey];
+        $authorization = Signature::signRequest('payment', 'POST', $url, $date, $nonce, $credentials, ['content-type' => 'application/json'], $data);
 
         $headers = [
             'x-mesomb-date' => $date->getTimestamp(),
             'x-mesomb-nonce' => $nonce,
             'Authorization' => $authorization,
             'Content-Type' => 'application/json',
-            'X-MeSomb-Application' => config('mesomb.key'),
+            'X-MeSomb-Application' => $this->applicationKey,
             'X-MeSomb-TrxID' => $this->depositModel->id,
         ];
 
@@ -161,5 +178,20 @@ class Deposit
         $this->recordDeposit($response->json(), $nonce);
 
         return $this->depositModel;
+    }
+
+    public function setApplicationKey(string $applicationKey): void
+    {
+        $this->applicationKey = $applicationKey;
+    }
+
+    public function setAccessKey(string $accessKey): void
+    {
+        $this->accessKey = $accessKey;
+    }
+
+    public function setSecretKey(string $secretKey): void
+    {
+        $this->secretKey = $secretKey;
     }
 }
