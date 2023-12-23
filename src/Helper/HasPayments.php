@@ -9,7 +9,7 @@ trait HasPayments
     /**
      * Model Collect.
      *
-     * @return Illuminate\Database\Eloquent\Relations\MorphOne
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function payments()
     {
@@ -19,13 +19,14 @@ trait HasPayments
     /**
      * Make Collect.
      *
-     * @param int|string $payer
-     * @param float|int  $amount
+     * @param string|null $payer
+     * @param float|int|null $amount
+     * @param string|null $service
      *
      * @return PaymentBuilder
      */
-    public function payment($payer = null, $amount = null)
+    public function payment(string $payer = null, float|int $amount = null, string $service = null): PaymentBuilder
     {
-        return new PaymentBuilder($this, $payer, $amount);
+        return new PaymentBuilder($this, $payer, $amount, $service);
     }
 }

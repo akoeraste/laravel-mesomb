@@ -9,7 +9,7 @@ trait HasDeposits
     /**
      * Model Deposits.
      *
-     * @return Illuminate\Database\Eloquent\Relations\MorphOne
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function deposits()
     {
@@ -19,13 +19,13 @@ trait HasDeposits
     /**
      * Make Deposit.
      *
-     * @param int|string $receiver
-     * @param float|int  $amount
+     * @param string|null $receiver
+     * @param float|int|null $amount
      *
-     * @return Hachther\MeSomb\Builder\DepositBuilder
+     * @return DepositBuilder
      */
-    public function deposit($receiver = null, $amount = null)
+    public function deposit(string $receiver = null, float|int $amount = null, string $service = null): DepositBuilder
     {
-        return new DepositBuilder($this, $receiver, $amount);
+        return new DepositBuilder($this, $receiver, $amount, $service);
     }
 }
