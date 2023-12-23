@@ -24,6 +24,13 @@ class Collect
     protected $url;
 
     /**
+     * Customer phone number in the local format.
+     *
+     * @var int|string
+     */
+    protected $payer;
+
+    /**
      * Collect Model.
      *
      * @var null|PaymentModel

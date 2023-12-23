@@ -12,13 +12,6 @@ trait PaymentData
     protected $amount;
 
     /**
-     * Customer phone number in the local format.
-     *
-     * @var int|string
-     */
-    protected $payer;
-
-    /**
      * Collect Service
      * MTN | ORANGE | AIRTEL.
      *

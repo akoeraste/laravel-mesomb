@@ -2,18 +2,18 @@
 
 namespace Hachther\MeSomb\Operation\Payment;
 
+use Hachther\MeSomb\Helper\PaymentData;
 use Hachther\MeSomb\Operation\Signature;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Http;
 use Hachther\MeSomb\Helper\HandleExceptions;
 use Hachther\MeSomb\Helper\RecordTransaction;
-use Hachther\MeSomb\Helper\SignedRequest;
 use Hachther\MeSomb\Model\Deposit as DepositModel;
 
 class Deposit
 {
-    use HandleExceptions, RecordTransaction;
+    use HandleExceptions, PaymentData, RecordTransaction;
 
     /**
      * Deposit URL.
@@ -21,6 +21,13 @@ class Deposit
      * @var string
      */
     protected $url;
+
+    /**
+     * Customer phone number in the local format.
+     *
+     * @var int|string
+     */
+    protected $receiver;
 
     /**
      * Your service application key on MeSomb
@@ -116,9 +123,12 @@ class Deposit
             'currency'  => $this->currency,
             'conversion'  => $this->conversion,
             'receiver'=> trim($this->receiver, '+'),
+            'customer'=> $this->customer,
+            'location'=> $this->location,
+            'product'=> $this->product,
         ];
 
-        return array_filter($this->saveDeposit($data));
+        return array_filter($this->saveDeposit($data), fn ($val) => ! is_null($val));
     }
 
     /**
@@ -178,6 +188,38 @@ class Deposit
         $this->recordDeposit($response->json(), $nonce);
 
         return $this->depositModel;
+    }
+
+    /**
+     * Details on the customer performing the payment. This will help MeSomb to build for you analytics based on customer (Example: Top N customers)
+     *
+     * @param array<string, string> $customer = {'email': string, 'phone': string, 'town': string, 'region': string, 'country': string, 'first_name': string, 'last_name': string, 'address': string
+     */
+    public function setCustomer(array $customer): void
+    {
+        $this->customer = $customer;
+    }
+
+    /**
+     * Location for where the transaction was done. This will help MeSomb to build for you location based analytics based on customer (Example: transactions per region)
+     *
+     * @param array<string, string> $location {'town': string, 'region': string, 'country': string}
+     * @return void
+     */
+    public function setLocation(array $location): void
+    {
+        $this->location = $location;
+    }
+
+    /**
+     * Give details on the product purchase will help for product-based analytics
+     *
+     * @param array $product {'id': string, 'name': string, 'category': string }
+     * @return void
+     */
+    public function setProduct(array $product)
+    {
+        $this->product = $product;
     }
 
     public function setApplicationKey(string $applicationKey): void
