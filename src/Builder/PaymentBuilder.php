@@ -21,8 +21,10 @@ class PaymentBuilder
         $payer,
         $amount,
         $service = null,
+        $country = 'CM',
         $currency = 'XAF',
         $fees = true,
+        $conversion = true,
         $message = null,
         $redirect = null
     ) {
@@ -31,7 +33,9 @@ class PaymentBuilder
         $this->amount = $amount;
         $this->service = $service;
         $this->fees = $fees;
+        $this->country = $country;
         $this->currency = $currency;
+        $this->conversion = $conversion;
         $this->message = $message;
         $this->redirect = $redirect;
     }
@@ -47,8 +51,10 @@ class PaymentBuilder
             $this->payer,
             $this->amount,
             $this->service,
+            $this->country,
             $this->currency,
             $this->fees,
+            $this->conversion,
             $this->message,
             $this->redirect
         ))->pay();
